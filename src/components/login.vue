@@ -19,20 +19,13 @@
             label-width="80px"
             :rules="loginRules"
           >
-            <el-form-item prop="username">
+            <el-form-item prop="user_account">
               <el-input
-                v-model="loginFrom.username"
+                v-model="loginFrom.user_account"
                 prefix-icon="el-icon-user"
                 placeholder="请输入账号"
               ></el-input>
             </el-form-item>
-          </el-form>
-          <el-form
-            ref="form"
-            :model="loginFrom"
-            label-width="80px"
-            :rules="loginRules"
-          >
             <el-form-item prop="password">
               <el-input
                 v-model="loginFrom.password"
@@ -52,24 +45,30 @@ export default {
   data() {
     return {
       loginFrom: {
-        username: "",
-        password: "",
+        user_account: "123",
+        password: "123",
       },
       loginRules: {
-        username: [
+        user_account: [
           { required: true, message: "请输入账号", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 4, max: 20, message: "长度在 8 到 20个字符", trigger: "blur" },
         ],
       },
     };
   },
   methods: {
     login() {
-      this.$router.replace('/home')
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) return
+        const { data: res } = await this.$http.post('/api/user/login',this.loginFrom)
+        if (res.code !== 200) return this.$message.error('登录失败!')
+        this.$message.success('登录成功!')
+        //成功后的token ,保存到客户端的sessionStorage中
+        window.sessionStorage.setItem('token', res.data.token)
+        this.$router.push('/home')
+      })
     }
   },
 };
