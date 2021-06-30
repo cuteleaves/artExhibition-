@@ -27,7 +27,7 @@
         >
           <div class="leftForm">
             <el-form-item label="表演形式" label-width="100px">
-              <el-select v-model="form.layout" class="layoutWidth">
+              <el-select v-model="form.vocality_type" class="layoutWidth">
                 <el-option label="合唱" value="合唱"></el-option>
                 <el-option label="小合唱" value="小合唱"></el-option>
                 <el-option label="表演唱" value="表演唱"></el-option>
@@ -36,8 +36,8 @@
           </div>
 
           <div class="rightForm">
-            <el-form-item label="作品时长" prop="min">
-              <el-input type="number" v-model="form.time.min" class="timeWidth"></el-input>
+            <el-form-item label="作品时长">
+              <el-input type="number" v-model="form.time.min" class="timeWidth" @change="getTime()"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -45,7 +45,7 @@
             </el-form-item>
 
             <el-form-item>
-              <el-input type="number" v-model="form.time.second" class="timeWidth"></el-input>
+              <el-input type="number" v-model="form.time.second" class="timeWidth" @change="getTime()"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -63,25 +63,25 @@
           :model="form"
         >
           <div class="leftForm2">
-            <el-form-item label="曲目1" label-width="100px" prop="song1">
-              <el-input v-model="form.song1" class="layoutWidth" placeholder="例：《曲目1》"></el-input>
+            <el-form-item label="曲目1" label-width="100px" prop="opus_name1">
+              <el-input v-model="form.opus_name1" class="layoutWidth" placeholder="例：《曲目1》"></el-input>
             </el-form-item>
           </div>
 
           <div class="centerForm2">
             <el-form-item label="是否为本届展演原创" label-width="150px">
-              <el-radio-group v-model="form.original1">
-                <el-radio label="true">是</el-radio>
-                <el-radio label="false">否</el-radio>
+              <el-radio-group v-model="form.is_originality1">
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
 
           <div class="rightForm2">
             <el-form-item label="是否为中国作品" label-width="150px">
-              <el-radio-group v-model="form.works1">
-                <el-radio label="true">是</el-radio>
-                <el-radio label="false">否</el-radio>
+              <el-radio-group v-model="form.is_chineseopus1">
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
@@ -96,24 +96,24 @@
         >
           <div class="leftForm2">
             <el-form-item label="曲目2(可不填)" label-width="100px">
-              <el-input v-model="form.song2" class="layoutWidth" placeholder="例：《曲目2》"></el-input>
+              <el-input v-model="form.opus_name2" class="layoutWidth" placeholder="例：《曲目2》"></el-input>
             </el-form-item>
           </div>
 
           <div class="centerForm2">
             <el-form-item label="是否为本届展演原创" label-width="150px">
-              <el-radio-group v-model="form.original2">
-                <el-radio label="true">是</el-radio>
-                <el-radio label="false">否</el-radio>
+              <el-radio-group v-model="form.is_originality2">
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
 
           <div class="rightForm2">
             <el-form-item label="是否为中国作品" label-width="150px">
-              <el-radio-group v-model="form.works2">
-                <el-radio label="true">是</el-radio>
-                <el-radio label="false">否</el-radio>
+              <el-radio-group v-model="form.is_chineseopus2">
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
@@ -121,28 +121,28 @@
         <!-- 第四排 -->
         <el-form rel="form" class="demo-form-inline" :inline="true" :rules="rules" :model="form">
           <div class="leftForm3">
-            <el-form-item label="联系人姓名" label-width="100px" prop="username">
-              <el-input v-model="form.username" class="userWidth" placeholder="请填写填报人或者负责人姓名即可"></el-input>
+            <el-form-item label="联系人姓名" label-width="100px" prop="contact_name">
+              <el-input v-model="form.contact_name" class="userWidth" placeholder="请填写填报人或者负责人姓名即可"></el-input>
             </el-form-item>
           </div>
 
           <div class="rightForm3">
-            <el-form-item label="联系人电话" label-width="100px" prop="phone">
-              <el-input v-model="form.phone" class="userWidth" placeholder="请输入手机号码"></el-input>
+            <el-form-item label="联系人电话" label-width="100px" prop="contact_number">
+              <el-input v-model="form.contact_number" class="userWidth" placeholder="请输入手机号码"></el-input>
             </el-form-item>
           </div>
         </el-form>
         <!-- 第五排 -->
         <el-form rel="form" class="demo-form-inline" :inline="true" :model="form" :rules="rules">
           <div class="leftForm3">
-            <el-form-item label="联系地址" label-width="100px" prop="address">
-              <el-input v-model="form.address" class="userWidth" placeholder="请输入详细地址"></el-input>
+            <el-form-item label="联系地址" label-width="100px" prop="contact_address">
+              <el-input v-model="form.contact_address" class="userWidth" placeholder="请输入详细地址"></el-input>
             </el-form-item>
           </div>
 
           <div class="rightForm3">
             <el-form-item label="组别" label-width="100px">
-              <el-select v-model="form.group" class="userWidth">
+              <el-select v-model="form.vocality_group" class="userWidth">
                 <el-option label="甲组（非专业组）" value="甲组（非专业组）"></el-option>
                 <el-option label="乙组（专业组）" value="乙组（专业组）"></el-option>
               </el-select>
@@ -152,8 +152,8 @@
         <!-- 第六排 -->
         <el-form rel="form" class="demo-form-inline" :inline="true" :model="form" :rules="rules">
           <div class="leftForm3">
-            <el-form-item label="表演人数" label-width="100px" prop="numberPeople">
-              <el-input v-model="form.numberPeople" class="userWidth" placeholder="表演人数为参展人数总和"></el-input>
+            <el-form-item label="表演人数" label-width="100px" prop="performer_number">
+              <el-input v-model="form.performer_number" class="userWidth" placeholder="表演人数为参展人数总和"></el-input>
             </el-form-item>
 
           </div>
@@ -164,7 +164,7 @@
             <el-form-item label="作品描述" label-width="100px">
               <el-input
                 type="textarea"
-                v-model="form.desc"
+                v-model="form.opus_describe"
                 style="width:350px"
                 :rows="10"
                 maxlength="200"
@@ -181,14 +181,14 @@
                 class="upload-demo"
                 drag
                 multiple
-                action
+                action="http://art.aztop.cn/api/uppic/uppic"
                 :show-file-list="false"
                 :on-success="videoSuccess"
                 :before-upload="videoBefore"
                 :on-progress="videoProcess"
               >
-                <video v-if="form.video" :src="form.video" controls="controls" class="upVideo">您的浏览器不支持视频播放</video>
-                <i v-if="form.vide == ''" class="el-icon-upload"></i>
+                <video v-if ="form.opus_file" :src="form.opus_file" controls="controls" class="upVideo">您的浏览器不支持视频播放</video>
+                <i v-if="form.opus_file == ''" class="el-icon-upload"></i>
                 <div class="el-upload__text">
                   将文件拖到此处，或
                   <em>点击上传</em>
@@ -477,26 +477,28 @@ export default {
       cb(new Error("请输入合法手机号码"));
     };
     return {
+      // form_time:this.form.min+"分"+this.form.second+"秒",
       form: {
-        layout: "合唱",
+        vocality_type: "合唱",
+        opus_time:'',
         time: {
-          min: "",
+          min: "1",
           second: "0",
         },
-        song1: "",
-        original1: "true",
-        works1: "true",
-        song2: "",
-        original2: "",
-        works2: "",
-        username: "",
-        phone: "",
-        address: "",
-        group: "甲组（非专业组）",
-        numberPeople: "",
-        desc: "",
+        opus_name1: "",
+        is_originality1: "1",
+        is_chineseopus1: "1",
+        opus_name2: "",
+        is_originality2: "",
+        is_chineseopus2: "",
+        contact_name: "",
+        contact_number: "",
+        contact_address: "",
+        vocality_group: "甲组（非专业组）",
+        performer_number: "",
+        opus_describe: "",
         accompany: "老师",
-        video:"",
+        opus_file:"",
       },
       tableData1: [
         {
@@ -602,6 +604,9 @@ export default {
       drawer: false,
     };
   },
+  created() {
+    
+  },
   methods: {
     //添加一行
     addTable1() {
@@ -625,12 +630,15 @@ export default {
     },
     //上传成功的钩子
     videoSuccess(res, file) {
-      if (res.status == 200) {
-        this.videoForm.videoUploadId = res.data.uploadId;
-        this.videoForm.Video = res.data.uploadUrl;
-      } else {
-        this.$message.error("视频上传失败，请重新上传！");
-      }
+      // if (res.status == 200) {
+      //   this.videoForm.videoUploadId = res.data.uploadId;
+      //   this.videoForm.Video = res.data.uploadUrl;
+      // } else {
+      //   this.$message.error("视频上传失败，请重新上传！");
+      // }
+      // console.log(res);
+      this.form.opus_file = res.data
+      console.log(this.form.opus_file);
     },
     //上传前验证视频格式内存
     videoBefore(file) {
@@ -652,6 +660,9 @@ export default {
         this.$message.error("上传视频大小不能超过10MB哦!");
         return false;
       }
+    },
+    getTime() {
+      this.opus_time = this.form.time.min+"分"+this.form.time.second+"秒"
     },
     //上传进度
   videoProcess() {},

@@ -64,6 +64,7 @@ export default {
         if (!valid) return
         const { data: res } = await this.$http.post('/api/user/login',this.loginFrom)
         if (res.code !== 200) return this.$message.error('登录失败!')
+        console.log(res);
         this.$message.success('登录成功!')
         //成功后的token ,保存到客户端的sessionStorage中
         window.sessionStorage.setItem('token', res.data.token)
